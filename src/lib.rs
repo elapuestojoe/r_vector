@@ -282,6 +282,7 @@ pub mod vector {
         }
     }
 
+    // TODO: Add support for T * Vector<T>
     impl<T> ops::Mul<T> for Vector<T>
     where
         T: Float,
@@ -354,6 +355,14 @@ mod tests {
     #[test]
     fn f32_constructor() {
         let vec = Vector::<f32>::new(1.0, 2.0, 3.0);
+        assert_eq!(vec.x(), 1.0);
+        assert_eq!(vec.y(), 2.0);
+        assert_eq!(vec.z(), 3.0);
+    }
+
+    #[test]
+    fn f64_constructor() {
+        let vec = Vector::<f64>::new(1.0, 2.0, 3.0);
         assert_eq!(vec.x(), 1.0);
         assert_eq!(vec.y(), 2.0);
         assert_eq!(vec.z(), 3.0);
@@ -445,7 +454,7 @@ mod tests {
     }
 
     #[test]
-    fn mul_t() {
+    fn mul_t_rhs() {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
         assert_eq!(vec_1 * 2.0, Vector::<f32>::new(20.0, 40.0, 60.0));
     }
