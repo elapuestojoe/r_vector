@@ -84,9 +84,9 @@ pub mod vector {
             let k = self.length().recip();
             Vector {
                 position: [
-                    self.position[0] / k,
-                    self.position[1] / k,
-                    self.position[2] / k,
+                    self.position[0] * k,
+                    self.position[1] * k,
+                    self.position[2] * k,
                 ],
             }
         }
@@ -481,7 +481,7 @@ mod tests {
         let mut vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
         assert_eq!(
             *vec_1.make_unit(),
-            Vector::<f32>::new(374.16574, 748.3315, 1122.4972)
+            Vector::<f32>::new(0.26726124, 0.5345225, 0.80178374)
         );
     }
 
@@ -490,7 +490,7 @@ mod tests {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
         assert_eq!(
             vec_1.unit_vector(),
-            Vector::<f32>::new(374.16574, 748.3315, 1122.4972)
+            Vector::<f32>::new(0.26726124, 0.5345225, 0.80178374)
         );
     }
 
@@ -498,9 +498,6 @@ mod tests {
     fn dot() {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
         let vec_2 = Vector::<f32>::new(2.0, 2.0, 2.0);
-        assert_eq!(
-            vec_1.dot(&vec_2),
-            120.0
-        );
+        assert_eq!(vec_1.dot(&vec_2), 120.0);
     }
 }
