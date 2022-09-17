@@ -53,7 +53,7 @@ pub mod vector {
         T: Float,
     {
         fn cross(&self, rhs: &Vector<T>) -> Vector<T>;
-        fn dot(&self, rhs: &Vector<T>) -> Vector<T>;
+        fn dot(&self, rhs: &Vector<T>) -> T;
         fn make_unit(&mut self) -> &mut Vector<T>;
         fn unit_vector(&self) -> Vector<T>;
     }
@@ -71,14 +71,10 @@ pub mod vector {
                 ],
             }
         }
-        fn dot(&self, rhs: &Vector<T>) -> Vector<T> {
-            Vector {
-                position: [
-                    self.position[0] * rhs.position[0],
-                    self.position[1] * rhs.position[1],
-                    self.position[2] * rhs.position[2],
-                ],
-            }
+        fn dot(&self, rhs: &Vector<T>) -> T {
+            self.position[0] * rhs.position[0]
+                + self.position[1] * rhs.position[1]
+                + self.position[2] * rhs.position[2]
         }
         fn make_unit(&mut self) -> &mut Vector<T> {
             *self = self.unit_vector();
@@ -429,7 +425,8 @@ mod tests {
     #[test]
     fn div_t() {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
-        assert_eq!(vec_1 / 10.0, Vector::<f32>::new(1.0, 2.0, 3.0));
+        let vec_2 = Vector::<f32>::new(2.0, 3.0, 4.0);
+        assert_eq!(vec_1.dot(&vec_2), 200.0);
     }
 
     #[test]
@@ -491,6 +488,15 @@ mod tests {
 
     #[test]
     fn unit_vector() {
+        let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
+        assert_eq!(
+            vec_1.unit_vector(),
+            Vector::<f32>::new(374.16574, 748.3315, 1122.4972)
+        );
+    }
+
+    #[test]
+    fn dot() {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
         assert_eq!(
             vec_1.unit_vector(),
