@@ -425,8 +425,7 @@ mod tests {
     #[test]
     fn div_t() {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
-        let vec_2 = Vector::<f32>::new(2.0, 3.0, 4.0);
-        assert_eq!(vec_1.dot(&vec_2), 200.0);
+        assert_eq!(vec_1 / 10.0, Vector::<f32>::new(1.0, 2.0, 3.0));
     }
 
     #[test]
@@ -498,9 +497,10 @@ mod tests {
     #[test]
     fn dot() {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
+        let vec_2 = Vector::<f32>::new(2.0, 2.0, 2.0);
         assert_eq!(
-            vec_1.unit_vector(),
-            Vector::<f32>::new(374.16574, 748.3315, 1122.4972)
+            vec_1.dot(&vec_2),
+            120.0
         );
     }
 }
