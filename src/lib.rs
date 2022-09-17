@@ -44,9 +44,7 @@ pub mod vector {
         }
 
         fn squared_length(&self) -> T {
-            self.position[0] * self.position[0]
-                + self.position[1] * self.position[1]
-                + self.position[2] * self.position[2]
+            self.position[0].powi(2) + self.position[1].powi(2) + self.position[2].powi(2)
         }
     }
 
