@@ -40,10 +40,10 @@ pub mod vector {
         }
 
         pub fn length(&self) -> T {
-            self.squared_length().sqrt()
+            self.length_squared().sqrt()
         }
 
-        fn squared_length(&self) -> T {
+        pub fn length_squared(&self) -> T {
             self.position[0].powi(2) + self.position[1].powi(2) + self.position[2].powi(2)
         }
     }
@@ -466,6 +466,12 @@ mod tests {
     fn length() {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
         assert_eq!(vec_1.length(), 37.416573);
+    }
+
+    #[test]
+    fn length_squared() {
+        let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
+        assert_eq!(vec_1.length_squared(), 1400.0);
     }
 
     #[test]
