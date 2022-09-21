@@ -1,6 +1,7 @@
 pub mod vector {
-    use num::Float;
+    use r_float::Float;
     use std::ops;
+
     #[derive(Clone, PartialEq, Debug)]
     pub struct Vector<T>
     where
@@ -45,6 +46,22 @@ pub mod vector {
 
         pub fn length_squared(&self) -> T {
             self.position[0].powi(2) + self.position[1].powi(2) + self.position[2].powi(2)
+        }
+
+        pub fn random() -> Vector<T> {
+            Vector {
+                position: [T::random(), T::random(), T::random()],
+            }
+        }
+
+        pub fn random_range(low: T, high: T) -> Vector<T> {
+            Vector {
+                position: [
+                    T::random_range(low, high),
+                    T::random_range(low, high),
+                    T::random_range(low, high),
+                ],
+            }
         }
     }
 
@@ -505,5 +522,21 @@ mod tests {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
         let vec_2 = Vector::<f32>::new(2.0, 2.0, 2.0);
         assert_eq!(vec_1.dot(&vec_2), 120.0);
+    }
+
+    #[test]
+    fn random() {
+        let vec_1 = Vector::<f32>::random();
+        assert!(vec_1.x() > 0f32 && vec_1.x() < 1_f32);
+        assert!(vec_1.y() > 0f32 && vec_1.y() < 1_f32);
+        assert!(vec_1.z() > 0f32 && vec_1.z() < 1_f32);
+    }
+
+    #[test]
+    fn random_range() {
+        let vec_1 = Vector::random_range(-1f64, 1f64);
+        assert!(vec_1.x() > -1f64 && vec_1.x() < 1_f64);
+        assert!(vec_1.y() > -1f64 && vec_1.y() < 1_f64);
+        assert!(vec_1.z() > -1f64 && vec_1.z() < 1_f64);
     }
 }
