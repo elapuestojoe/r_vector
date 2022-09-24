@@ -251,7 +251,7 @@ pub mod vector {
         fn mul(self, rhs: &Vector<T>) -> Vector<T> {
             Vector {
                 position: [
-                    self.position[0] * rhs.position[1],
+                    self.position[0] * rhs.position[0],
                     self.position[1] * rhs.position[1],
                     self.position[2] * rhs.position[2],
                 ],
