@@ -295,7 +295,6 @@ pub mod vector {
         }
     }
 
-    // TODO: Add support for T * Vector<T>
     impl<T> ops::Mul<T> for Vector<T>
     where
         T: Float,
@@ -303,6 +302,34 @@ pub mod vector {
         type Output = Vector<T>;
         fn mul(self, rhs: T) -> Vector<T> {
             return &self * rhs;
+        }
+    }
+
+    impl ops::Mul<Vector<f32>> for f32 {
+        type Output = Vector<f32>;
+        fn mul(self, rhs: Vector<f32>) -> Vector<f32> {
+            return rhs * self;
+        }
+    }
+
+    impl ops::Mul<&Vector<f32>> for f32 {
+        type Output = Vector<f32>;
+        fn mul(self, rhs: &Vector<f32>) -> Vector<f32> {
+            return rhs * self;
+        }
+    }
+
+    impl ops::Mul<Vector<f64>> for f64 {
+        type Output = Vector<f64>;
+        fn mul(self, rhs: Vector<f64>) -> Vector<f64> {
+            return rhs * self;
+        }
+    }
+
+    impl ops::Mul<&Vector<f64>> for f64 {
+        type Output = Vector<f64>;
+        fn mul(self, rhs: &Vector<f64>) -> Vector<f64> {
+            return rhs * self;
         }
     }
 
@@ -470,6 +497,21 @@ mod tests {
     fn mul_t_rhs() {
         let vec_1 = Vector::<f32>::new(10.0, 20.0, 30.0);
         assert_eq!(vec_1 * 2.0, Vector::<f32>::new(20.0, 40.0, 60.0));
+    }
+
+    #[test]
+    fn mul_t_lhs() {
+        let vec_1 = Vector::new(10.0f32, 20.0f32, 30.0f32);
+        assert_eq!(2.0 * vec_1, Vector::new(20.0, 40.0, 60.0));
+
+        let vec_2 = Vector::new(10f64, 20f64, 30f64);
+        assert_eq!(2.0 * vec_2, Vector::new(20.0, 40.0, 60.0));
+
+        let vec_3 = Vector::<f32>::new(10.0, 20.0, 30.0);
+        assert_eq!(2.0 * &vec_3, Vector::new(20.0, 40.0, 60.0));
+
+        let vec_4 = Vector::new(10.0f64, 20.0f64, 30.0f64);
+        assert_eq!(2.0 * &vec_4, Vector::new(20.0, 40.0, 60.0));
     }
 
     #[test]
