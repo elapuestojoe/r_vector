@@ -77,8 +77,7 @@ pub mod vector {
         fn refract(
             &self,
             rhs: &Vector<T>,
-            refraction_index_a: T,
-            refraction_index_b: T,
+            refraction_index: T,
         ) -> Option<Vector<T>>;
     }
 
@@ -120,19 +119,17 @@ pub mod vector {
         fn refract(
             &self,
             rhs: &Vector<T>,
-            refraction_index_a: T,
-            refraction_index_b: T,
+            refraction_index: T,
         ) -> Option<Vector<T>> {
             let unit_vector = self.unit_vector();
             let determinant = self.dot(rhs);
-            let refraction_ratio = refraction_index_a / refraction_index_b;
             let discriminant =
-                T::one() - refraction_ratio.powi(2) * (T::one() - determinant.powi(2));
+                T::one() - refraction_index.powi(2) * (T::one() - determinant.powi(2));
             if discriminant <= T::zero() {
                 return Option::None;
             }
             Some(
-                (unit_vector - self * determinant) * refraction_ratio - (rhs * discriminant.sqrt()),
+                (unit_vector - self * determinant) * refraction_index - (rhs * discriminant.sqrt()),
             )
         }
     }
@@ -596,7 +593,7 @@ mod tests {
         let vec_1 = Vector::new(1.0, 2.0, 3.0);
         let vec_2 = Vector::new(2.0, 1.5, 1.0);
         assert_eq!(
-            vec_1.refract(&vec_2, 1.0, 1.5).unwrap(),
+            vec_1.refract(&vec_2, 1.0/1.5).unwrap(),
             Vector::new(-15.92548878632739, -18.38806555481852, -20.850642323309653)
         );
     }
